@@ -1,4 +1,6 @@
 import csv
+import datetime
+
 
 count = 0
 with open('/Users/malcolm/Downloads/TescoOut.csv', 'w', newline='') as csvOutfile:
@@ -71,10 +73,39 @@ with open('/Users/malcolm/Downloads/HalifaxOut.csv', 'w', newline='') as csvOutf
                                 else:
                                     csvwriter.writerow([row[0],row[3],'-'+(row[4].strip())])
                                     print(row[0],row[3],'-'+row[4].strip())
-
+'''
 with open('/Users/malcolm/Downloads/Santander.txt',encoding='latin1') as csvfile:
-	data = csv.reader(csvfile)
-	for row in data:
-		x=row[0].split('\xa0')
-		if len (x) > 1:
-			print(x[0],x[1])
+    data = csv.reader(csvfile)
+    for row in data:
+        print('YY',row)
+        x=row[0].split('\xa0')
+        if len (x) > 1:
+            print(x[0],x[1])
+'''
+#count = 0
+now = datetime.datetime.now()
+lastmonth = now.month - 1
+if (lastmonth < 10):
+    MonthStr = '0'+str(lastmonth)
+else:
+    MonthStr = str(lastmonth)
+
+with open('/Users/malcolm/Downloads/PaypalOut.csv', 'w', newline='') as csvOutfile:
+    csvwriter = csv.writer(csvOutfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+
+    with open('/Users/malcolm/Downloads/Paypal.csv') as csvfile:
+        data = csv.reader(csvfile, delimiter=',')
+        csvwriter.writerow(['Date(DD/MM/YYYY)']+['Description']+['Amount'])
+        for row in data:
+            if (row[0][3:5] == MonthStr):
+                if len(row)>0:
+                    if row[0] != 'Date':
+                        if row[15] == '':
+                                if row[5] == 'Completed':
+                                    csvwriter.writerow([row[0],row[4],row[7]])
+                                    print (row[0],row[4],row[7], row[5])
+                        else:
+                                if row[5] == 'Completed':
+                                    csvwriter.writerow([row[0],row[15],row[7]])
+                                    print (row[0],row[41],row[7], row[5])
+
