@@ -1,7 +1,7 @@
 import csv
 import datetime
 
-
+#TESCO
 count = 0
 with open('/Users/malcolm/Downloads/TescoOut.csv', 'w', newline='') as csvOutfile:
     csvwriter = csv.writer(csvOutfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
@@ -20,7 +20,7 @@ with open('/Users/malcolm/Downloads/TescoOut.csv', 'w', newline='') as csvOutfil
                         else:
                             csvwriter.writerow([row[0],row[3]+' '+row[4]+' '+row[5]+' '+row[6],'-'+row[2].strip('£')])
                             print(row[0],row[3]+' '+row[4]+' '+row[5]+' '+row[6],'-'+row[2].strip('£'))
-
+#Natwest
 with open('/Users/malcolm/Downloads/NatwestOut.csv', 'w', newline='') as csvOutfile:
     csvwriter = csv.writer(csvOutfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
@@ -31,7 +31,7 @@ with open('/Users/malcolm/Downloads/NatwestOut.csv', 'w', newline='') as csvOutf
             if len(row)>0:
                 if row[0] != 'Date':
                     csvwriter.writerow([row[0],row[2],row[3]])
-
+#AMEX
 f = open("/Users/malcolm/Downloads/AmexCombined.csv", "w")
 tempf1 = open('/Users/malcolm/Downloads/Amex1.csv')
 tempf2 = open('/Users/malcolm/Downloads/Amex2.csv')
@@ -45,14 +45,15 @@ with open('/Users/malcolm/Downloads/AmexOut.csv', 'w', newline='') as csvOutfile
         data = csv.reader(csvfile, delimiter=',')
         csvwriter.writerow(['Date(DD/MM/YYYY)']+['Description']+['Amount'])
         for row in data:
-                if 'PAYMENT RECEIVED - THANK YOU' not in row[3]:
-                        if '-' in row[2]:
-                                csvwriter.writerow([row[0],row[3],(row[2].strip(' -'))])
-                                print(row[0],row[3],(row[2].strip(' -')))
+                if ('PAYMENT RECEIVED - THANK YOU' not in row[1]) and ('Extended Detail'not in row[5]):
+                        if '-' in row[4]:
+                                csvwriter.writerow([row[0],row[5]+' '+row[6]+' '+row[7]+' '+row[8]+' '+row[9]+' '+row[10],(row[4].strip(' -'))])
+                                print(row[0],row[5]+' '+row[6]+' '+row[7]+' '+row[8]+' '+row[9]+' '+row[10],(row[4].strip(' -')))
                         else:
-                            csvwriter.writerow([row[0],row[3],'-'+(row[2].strip())])
-                            print(row[0],row[3],'-'+row[2].strip())
-                            
+                            csvwriter.writerow([row[0],row[5]+' '+row[6]+' '+row[7]+' '+row[8]+' '+row[9]+' '+row[10],'-'+(row[4].strip())])
+                            print(row[0],row[5]+' '+row[6]+' '+row[7]+' '+row[8]+' '+row[9]+' '+row[10],'-'+row[4].strip())
+
+#Halifax                            
 count = 0
 with open('/Users/malcolm/Downloads/HalifaxOut.csv', 'w', newline='') as csvOutfile:
     csvwriter = csv.writer(csvOutfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
@@ -73,6 +74,8 @@ with open('/Users/malcolm/Downloads/HalifaxOut.csv', 'w', newline='') as csvOutf
                                 else:
                                     csvwriter.writerow([row[0],row[3],'-'+(row[4].strip())])
                                     print(row[0],row[3],'-'+row[4].strip())
+
+#Santander
 '''
 with open('/Users/malcolm/Downloads/Santander.txt',encoding='latin1') as csvfile:
     data = csv.reader(csvfile)
@@ -82,13 +85,14 @@ with open('/Users/malcolm/Downloads/Santander.txt',encoding='latin1') as csvfile
         if len (x) > 1:
             print(x[0],x[1])
 '''
-#count = 0
+#Paypal
 now = datetime.datetime.now()
 lastmonth = now.month - 1
 if (lastmonth < 10):
     MonthStr = '0'+str(lastmonth)
 else:
     MonthStr = str(lastmonth)
+
 
 with open('/Users/malcolm/Downloads/PaypalOut.csv', 'w', newline='') as csvOutfile:
     csvwriter = csv.writer(csvOutfile, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
@@ -108,4 +112,3 @@ with open('/Users/malcolm/Downloads/PaypalOut.csv', 'w', newline='') as csvOutfi
                                 if row[5] == 'Completed':
                                     csvwriter.writerow([row[0],row[15],row[7]])
                                     print (row[0],row[41],row[7], row[5])
-
