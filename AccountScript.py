@@ -45,13 +45,13 @@ with open('/Users/malcolm/Downloads/AmexOut.csv', 'w', newline='') as csvOutfile
         data = csv.reader(csvfile, delimiter=',')
         csvwriter.writerow(['Date(DD/MM/YYYY)']+['Description']+['Amount'])
         for row in data:
-                if ('PAYMENT RECEIVED - THANK YOU' not in row[1]) and ('Extended Detail'not in row[5]):
+                if ('PAYMENT RECEIVED - THANK YOU' not in row[1]):
                         if '-' in row[4]:
-                                csvwriter.writerow([row[0],row[5]+' '+row[6]+' '+row[7]+' '+row[8]+' '+row[9]+' '+row[10],(row[4].strip(' -'))])
-                                print(row[0],row[5]+' '+row[6]+' '+row[7]+' '+row[8]+' '+row[9]+' '+row[10],(row[4].strip(' -')))
+                                csvwriter.writerow([row[0],row[1],(row[4].strip(' -'))])
+                                print(row[0],row[1],(row[4].strip(' -')))
                         else:
-                            csvwriter.writerow([row[0],row[5]+' '+row[6]+' '+row[7]+' '+row[8]+' '+row[9]+' '+row[10],'-'+(row[4].strip())])
-                            print(row[0],row[5]+' '+row[6]+' '+row[7]+' '+row[8]+' '+row[9]+' '+row[10],'-'+row[4].strip())
+                            csvwriter.writerow([row[0],row[1],'-'+(row[4].strip())])
+                            print(row[0],row[1],'-'+row[4].strip())
 
 #Halifax                            
 count = 0
